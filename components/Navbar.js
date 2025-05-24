@@ -1,10 +1,16 @@
 import React from 'react'
 
 const Navbar = () => {
-  return (
-    <div>
-      <nav></nav>
-    </div>
+  return ( <nav className='bg-[#020D25] text-white flex justify-between px-4 items-center h-16'>
+      <div className="logo font-bold text-lg">GetMeABiryani</div>
+      <ul className="flex justify-between gap-4">
+        <li>Home</li>
+        <li>About</li>
+        <li>Projects</li>
+        <li>Sign Up</li>
+        <li>Login</li>
+      </ul>
+      </nav>
   )
 }
 
