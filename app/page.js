@@ -12,6 +12,25 @@ export default function Home() {
     </div>
    </div>
       <div className="bg-white h-1 opacity-10">fsd</div>
+
+      <div className="text-white container mx-auto">
+        <h1 className="text-2xl font-bold text-center my-14">Your Fans can buy you a Biryani</h1>
+        <div className="flex gap-5 justify-around">
+          <div className="item space-y-3">
+            <img className="bg-slate-400 rounded-full p-2 text-black" width={88} src="/working.gif" alt="" />
+            <p className="font-bold">Fund Yourself</p>
+          </div>
+          <div className="item space-y-3">
+            <img className="bg-slate-400 rounded-full p-2 text-black" width={88} src="/man_sitting.png" alt="" />
+            <p className="font-bold">Fund Yourself</p>
+          </div>
+          <div className="item space-y-3">
+            <img className="bg-slate-400 rounded-full p-2 text-black" width={88} src="/man_sitting.png" alt="" />
+            <p className="font-bold">Fund Yourself</p>
+          </div>
+
+        </div>
+        </div>
     </>
   );
 }
