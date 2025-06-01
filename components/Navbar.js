@@ -6,13 +6,13 @@ const Navbar = () => {
         <img src="/biryani.png" width={44} alt="" />
         <span>GetMeABiryani</span>
         </div>
-      <ul className="flex justify-between gap-4">
+      {/* <ul className="flex justify-between gap-4">
         <li>Home</li>
         <li>About</li>
         <li>Projects</li>
         <li>Sign Up</li>
         <li>Login</li>
-      </ul>
+      </ul> */}
       </nav>
   )
 }
