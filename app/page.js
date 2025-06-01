@@ -13,20 +13,23 @@ export default function Home() {
    </div>
       <div className="bg-white h-1 opacity-10">fsd</div>
 
-      <div className="text-white container mx-auto">
-        <h1 className="text-2xl font-bold text-center my-14">Your Fans can buy you a Biryani</h1>
+      <div className="text-white container mx-auto pb-32 pt-14">
+        <h1 className="text-3xl font-bold text-center mb-14">Your Fans Can Buy You A Biryani</h1>
         <div className="flex gap-5 justify-around">
-          <div className="item space-y-3">
-            <img className="bg-slate-400 rounded-full p-2 text-black" width={88} src="/working.gif" alt="" />
+          <div className="item space-y-3 flex flex-col items-center justify-center">
+            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/working.gif" alt="" />
             <p className="font-bold">Fund Yourself</p>
+            <p className="text-center">Get funded and take the leap</p>
           </div>
-          <div className="item space-y-3">
-            <img className="bg-slate-400 rounded-full p-2 text-black" width={88} src="/man_sitting.png" alt="" />
-            <p className="font-bold">Fund Yourself</p>
+          <div className="item space-y-3 flex flex-col items-center justify-center">
+            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/coin.gif" alt="" />
+            <p className="font-bold">Get Funded</p>
+            <p className="text-center">Get funded and take the leap</p>
           </div>
-          <div className="item space-y-3">
-            <img className="bg-slate-400 rounded-full p-2 text-black" width={88} src="/man_sitting.png" alt="" />
-            <p className="font-bold">Fund Yourself</p>
+          <div className="item space-y-3 flex flex-col items-center justify-center">
+            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/group.gif" alt="" />
+            <p className="font-bold">Fans want to help</p>
+            <p className="text-center">Your fans are here to support you</p>
           </div>
 
         </div>
