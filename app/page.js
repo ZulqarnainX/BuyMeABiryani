@@ -17,7 +17,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-14">Your Fans Can Buy You A Biryani</h1>
         <div className="flex gap-5 justify-around">
           <div className="item space-y-3 flex flex-col items-center justify-center">
-            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/working.gif" alt="" />
+            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/working_dog.gif" alt="" />
             <p className="font-bold">Fund Yourself</p>
             <p className="text-center">Get funded and take the leap</p>
           </div>
