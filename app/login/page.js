@@ -2,13 +2,19 @@
 import React from "react";
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation";
+import { useEffect } from 'react'
 
 const Login = () => {
   const { data: session } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
     if (session) {
-    const router = useRouter()
-    router.push('/dashboard')
-  }
+      router.push('/dashboard')
+    }
+  }, [session, router])
+
+  
   return (
     <div className="text-white py-14 container mx-auto">
       <h1 className="font-bold text-3xl text-center bg-gradient-to-r from-sky-200 via-blue-100 to-slate-300 text-transparent bg-clip-text">
@@ -74,7 +80,7 @@ const Login = () => {
           Sign in with Twitter
         </button>
         <button
-          onClick={()=>{signIn("github")}}
+          onClick={() => { signIn("github") }}
           type="button"
           className="w-[205px] text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2"
         >
