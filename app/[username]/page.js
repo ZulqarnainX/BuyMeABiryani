@@ -2,7 +2,7 @@ import React from 'react'
 
 const Username = ({params}) => {
   return (
-    <div>
+    <div className='cover'>
       {params.username}
     </div>
   )
