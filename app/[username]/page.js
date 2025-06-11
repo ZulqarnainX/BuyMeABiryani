@@ -9,9 +9,31 @@ const Username = ({ params }) => {
         <div className='absolute -bottom-20 right-[46%] rounded-full border-white border-2'>
           <img className='rounded-full' width={150} height={150} src="https://avatars.githubusercontent.com/u/184561476?v=4" alt="" />
         </div>
-        <div className="info">
-            {params.username}
-        </div>
+      </div>
+        <div className="info flex justify-center items-center my-20 flex-col gap-2">
+          <div className='font-bold text-lg'>
+            @{params.username}
+          </div>
+          <div className='text-slate-400'>
+            I just like to code 🤷
+          </div>
+          <div className='text-slate-400'>
+            0 members . 0 posts . $15,000/release
+          </div>
+
+          <div className="payment flex gap-3 w-[80%]">
+            <div className="supporters w-1/2">
+            {/* Show list of all the supporters as a leaderboard */}
+            <h2 className='text-lg font-bold'>Supporters</h2>
+            <ul>
+              <li>Ahmed donated $30 with a message ""</li>
+              <li>Ahmed donated $30 with a message ""</li>
+              <li>Ahmed donated $30 with a message ""</li>
+            </ul>
+            </div>
+
+            <div className="makePayment w-1/2"></div>
+          </div>
       </div>
     </>
   )
