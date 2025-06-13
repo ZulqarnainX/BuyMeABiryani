@@ -1,5 +1,10 @@
 import NextAuth from 'next-auth'
 import GitHubProvider from "next-auth/providers/github";
+import mongoose from 'mongoose';
+import User from '@/models/User';
+import connectDB from '@/db/connectDb';
+
+
 // import AppleProvider from 'next-auth/providers/apple'
 // import FacebookProvider from 'next-auth/providers/facebook'
 // import GoogleProvider from 'next-auth/providers/google'
@@ -34,9 +39,25 @@ export const authoptions = NextAuth({
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if(account.provider == "github"){
-        // connect to the database
-        const client = await mongoose.connect()
+        
+        // Check if the user already exists in the database
+        const currentUser = User.findOne({email: email})
+        if(!currentUser){
+          // Create a new user
+          const newUser = new User ({
+            email: email,
+            username: email.split("@")[0],
+          })
+          await newUser.save()
+        
+        }
+        return true;
       }
+    },
+    async session({ session, user, token }) {
+      const dbUser = await User.find({email: session.user.email})
+      session.user.name = dbUser.username
+    return session
     }
   }
 })
