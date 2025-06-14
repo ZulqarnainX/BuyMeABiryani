@@ -12,17 +12,24 @@ const page = () => {
 
   //   Redirecting Users to /login if they are logged in
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
+  if (status === "loading") return;
+  if (!session) {
+    router.push("/login");
+  } else {
+    getData();
+  }
+}, [status, session]);
+
+  const getData = async () => {
+    let u = await fetchuser(session.user.name)
+    setform(u)
+  }
   
   const handleChange = (e) => {
         setform({ ...form, [e.target.name]: e.target.value })
     }
 
   const handleSubmit = async (e) => {
-    update()
     let a = await updateProfile(e, session.user.name)
     alert("Profile Updated")
   }
@@ -61,12 +68,12 @@ const page = () => {
                     </div>
                     {/* input easypaisa name */}
                     <div className="my-2">
-                        <label htmlFor="easypaisaname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Easypaisa Name</label>
+                        <label htmlFor="easypaisaname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">EasyPaisa Name</label>
                         <input value={form.easypaisaname ? form.easypaisaname : ""} onChange={handleChange} type="text" name='easypaisaname' id="easypaisaname" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
                     {/* input easypaisa number */}
                     <div className="my-2">
-                        <label htmlFor="easypaisanum" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Easypaisa Number</label>
+                        <label htmlFor="easypaisanum" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">EasyPaisa Number</label>
                         <input value={form.easypaisanum ? form.easypaisanum : ""} onChange={handleChange} type="text" name='easypaisanum' id="easypaisanum" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
 
