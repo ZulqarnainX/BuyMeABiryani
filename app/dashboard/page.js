@@ -18,7 +18,7 @@ const page = () => {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center">
-        <div className="bg-[#070f2cb2] p-8 rounded-xl w-full max-w-md shadow-lg">
+        <div className="p-8 rounded-xl w-full max-w-md shadow-lg">
           <h1 className="text-2xl font-bold text-white text-center mb-6">Welcome to your Dashboard</h1>
 
           <form className="flex flex-col space-y-4">
