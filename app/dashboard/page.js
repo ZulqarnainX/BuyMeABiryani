@@ -1,12 +1,14 @@
 "use client"
 import React from 'react'
 import { useRouter } from "next/navigation";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
+import { updateProfile, fetchuser } from '@/actions/useractions';
 
 const page = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const router = useRouter();
+  const [form, setform] = useState({})
 
   //   Redirecting Users to /login if they are logged in
   useEffect(() => {
@@ -14,47 +16,68 @@ const page = () => {
       router.push("/login");
     }
   }, [status, router]);
+  
+  const handleChange = (e) => {
+        setform({ ...form, [e.target.name]: e.target.value })
+    }
+
+  const handleSubmit = async (e) => {
+    update()
+    let a = await updateProfile(e, session.user.name)
+    alert("Profile Updated")
+  }
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="p-8 rounded-xl w-full max-w-md shadow-lg">
-          <h1 className="text-2xl font-bold text-white text-center mb-6">Welcome to your Dashboard</h1>
+      <div className='container mx-auto py-5 px-6 '>
+                <h1 className='text-center my-5 text-3xl font-bold'>Welcome to your Dashboard</h1>
 
-          <form className="flex flex-col space-y-4">
-            <label className="text-gray-300">Name
-              <input type="text" className="mt-1 w-full p-2 rounded-md bg-gray-700 text-white focus:outline-none" />
-            </label>
+                <form className="max-w-2xl mx-auto" action={handleSubmit}>
 
-            <label className="text-gray-300">Email
-              <input type="email" className="mt-1 w-full p-2 rounded-md bg-gray-700 text-white focus:outline-none" />
-            </label>
+                    <div className='my-2'>
+                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                        <input value={form.name ? form.name : ""} onChange={handleChange} type="text" name='name' id="name" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </div>
+                    {/* input for email */}
+                    <div className="my-2">
+                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <input value={form.email ? form.email : ""} onChange={handleChange} type="email" name='email' id="email" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </div>
+                    {/* input forusername */}
+                    <div className='my-2'>
+                        <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                        <input value={form.username ? form.username : ""} onChange={handleChange} type="text" name='username' id="username" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </div>
+                    {/* input for profile picture of input type text */}
+                    <div className="my-2">
+                        <label htmlFor="profilepic" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile Picture</label>
+                        <input value={form.profilepic ? form.profilepic : ""} onChange={handleChange} type="text" name='profilepic' id="profilepic" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </div>
 
-            <label className="text-gray-300">Username
-              <input type="text" className="mt-1 w-full p-2 rounded-md bg-gray-700 text-white focus:outline-none" />
-            </label>
+                    {/* input for cover pic  */}
+                    <div className="my-2">
+                        <label htmlFor="coverpic" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cover Picture</label>
+                        <input value={form.coverpic ? form.coverpic : ""} onChange={handleChange} type="text" name='coverpic' id="coverpic" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </div>
+                    {/* input easypaisa name */}
+                    <div className="my-2">
+                        <label htmlFor="easypaisaname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Easypaisa Name</label>
+                        <input value={form.easypaisaname ? form.easypaisaname : ""} onChange={handleChange} type="text" name='easypaisaname' id="easypaisaname" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </div>
+                    {/* input easypaisa number */}
+                    <div className="my-2">
+                        <label htmlFor="easypaisanum" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Easypaisa Number</label>
+                        <input value={form.easypaisanum ? form.easypaisanum : ""} onChange={handleChange} type="text" name='easypaisanum' id="easypaisanum" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </div>
 
-            <label className="text-gray-300">Profile Picture
-              <input type="url" className="mt-1 w-full p-2 rounded-md bg-gray-700 text-white focus:outline-none" />
-            </label>
+                    {/* Submit Button  */}
+                    <div className="my-6">
+                        <button type="submit" className="block w-full p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-blue-500 focus:ring-4 focus:outline-none   dark:focus:ring-blue-800 font-medium text-sm">Save</button>
+                    </div>
+                </form>
 
-            <label className="text-gray-300">Cover Picture
-              <input type="url" className="mt-1 w-full p-2 rounded-md bg-gray-700 text-white focus:outline-none" />
-            </label>
 
-            <label className="text-gray-300">Easypaisa Credentials
-              <input type="text" className="mt-1 w-full p-2 rounded-md bg-gray-700 text-white focus:outline-none" />
-            </label>
-
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition"
-            >
-              Save
-            </button>
-          </form>
-        </div>
-      </div>
+            </div>
     </>
   )
 }
