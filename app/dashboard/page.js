@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import { updateProfile, fetchuser } from '@/actions/useractions';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 
 const page = () => {
+
   const { data: session, status, update } = useSession();
   const router = useRouter();
   const [form, setform] = useState({})
@@ -25,7 +27,7 @@ const page = () => {
     setform(u)
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { 
     setform({ ...form, [e.target.name]: e.target.value })
   }
 
@@ -33,12 +35,11 @@ const page = () => {
     if (status === "loading") return;
     if (!session) return;
 
-
+    alert("Profile Updated Successfully");
     let a = await updateProfile(e, session.user.name)
-    alert("Profile Updated")
     router.push(`/${session.user.name}`);
     getData();
-    
+
   }
 
 
