@@ -30,9 +30,17 @@ const page = () => {
   }
 
   const handleSubmit = async (e) => {
+    if (status === "loading") return;
+    if (!session) return;
+
+
     let a = await updateProfile(e, session.user.name)
     alert("Profile Updated")
+    router.push(`/${session.user.name}`);
+    getData();
+    
   }
+
 
   return (
     <>
