@@ -10,13 +10,18 @@ const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+
   callbacks: {
     async signIn({ user, account }) {
       try {
-        await connectDb()
+        console.log('▶ signIn triggered for:', user.email)
 
+        await connectDb()
         const email = user?.email
-        if (!email) return false
+        if (!email) {
+          console.log('❌ Missing email')
+          return false
+        }
 
         let dbUser = await User.findOne({ email })
 
@@ -24,17 +29,18 @@ const authOptions = {
           dbUser = await User.create({
             email,
             username: email.split('@')[0],
-            name: user.name || email.split('@')[0], // name field in schema
-            profilepic: user.image || '', // optional
+            name: user.name || email.split('@')[0],
+            profilepic: user.image || '',
           })
+          console.log('✅ User created:', dbUser.email)
+        } else {
+          console.log('✅ User exists:', dbUser.email)
         }
 
-        // Optional: set user session data
         user.name = dbUser.username
-
         return true
       } catch (err) {
-        console.error('signIn error:', err)
+        console.error('❌ signIn error:', err)
         return false
       }
     },
@@ -43,15 +49,13 @@ const authOptions = {
       try {
         await connectDb()
         const dbUser = await User.findOne({ email: session.user.email })
-
         if (dbUser) {
           session.user.username = dbUser.username
           session.user.profilepic = dbUser.profilepic || ''
         }
-
         return session
       } catch (err) {
-        console.error('session error:', err)
+        console.error('❌ session error:', err)
         return session
       }
     },
