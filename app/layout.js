@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionWrapper from "@/components/SessionWrapper";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -15,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "GetMeABiryani - because support should be spicy.",
-  description: "GetMeABiryani lets fans tip their favorite creators—support content, fund biryani, spread joy.",
+  title: "BuyMeABiryani - because support should be spicy.",
+  description: "BuyMeABiryani lets fans tip their favorite creators—support content, fund biryani, spread joy.",
 };
 
 export default function RootLayout({ children }) {
