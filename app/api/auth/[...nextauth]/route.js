@@ -8,18 +8,24 @@ const authOptions = {
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
+      authorization: {
+        params: {
+          scope: "read:user user:email", // ✅ Fixes missing GitHub email
+        },
+      },
     }),
   ],
 
   callbacks: {
     async signIn({ user, account }) {
       try {
-        console.log('▶ signIn triggered for:', user.email)
+        console.log("▶ signIn triggered for:", user?.email)
 
         await connectDb()
+
         const email = user?.email
         if (!email) {
-          console.log('❌ Missing email')
+          console.log("❌ Missing email")
           return false
         }
 
@@ -28,19 +34,20 @@ const authOptions = {
         if (!dbUser) {
           dbUser = await User.create({
             email,
-            username: email.split('@')[0],
-            name: user.name || email.split('@')[0],
-            profilepic: user.image || '',
+            username: email.split("@")[0],
+            name: user.name || email.split("@")[0],
+            profilepic: user.image || "",
           })
-          console.log('✅ User created:', dbUser.email)
+          console.log("✅ Created new user:", dbUser.email)
         } else {
-          console.log('✅ User exists:', dbUser.email)
+          console.log("✅ Found existing user:", dbUser.email)
         }
 
+        // Optional: store username in session
         user.name = dbUser.username
         return true
       } catch (err) {
-        console.error('❌ signIn error:', err)
+        console.error("❌ signIn error:", err)
         return false
       }
     },
@@ -51,15 +58,16 @@ const authOptions = {
         const dbUser = await User.findOne({ email: session.user.email })
         if (dbUser) {
           session.user.username = dbUser.username
-          session.user.profilepic = dbUser.profilepic || ''
+          session.user.profilepic = dbUser.profilepic || ""
         }
         return session
       } catch (err) {
-        console.error('❌ session error:', err)
+        console.error("❌ session error:", err)
         return session
       }
     },
   },
+  secret: process.env.NEXTAUTH_SECRET, // ✅ Always needed
 }
 
 const handler = NextAuth(authOptions)
