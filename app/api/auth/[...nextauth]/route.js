@@ -10,35 +10,32 @@ const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
-
   callbacks: {
     async signIn({ user, account }) {
       try {
-        if (account.provider === 'github') {
-          await connectDb()
+        await connectDb()
 
-          const email = user?.email
-          if (!email) return false
+        const email = user?.email
+        if (!email) return false
 
-          let existingUser = await User.findOne({ email })
+        let dbUser = await User.findOne({ email })
 
-          if (!existingUser) {
-            const newUser = await User.create({
-              email,
-              username: email.split('@')[0],
-            })
-            user.name = newUser.username
-          } else {
-            user.name = existingUser.username
-          }
-
-          return true // ✅ Sign in allowed
+        if (!dbUser) {
+          dbUser = await User.create({
+            email,
+            username: email.split('@')[0],
+            name: user.name || email.split('@')[0], // name field in schema
+            profilepic: user.image || '', // optional
+          })
         }
 
-        return true // fallback: allow other providers if used
-      } catch (error) {
-        console.error('SignIn Error:', error)
-        return false // ⛔ Deny on error
+        // Optional: set user session data
+        user.name = dbUser.username
+
+        return true
+      } catch (err) {
+        console.error('signIn error:', err)
+        return false
       }
     },
 
@@ -46,12 +43,15 @@ const authOptions = {
       try {
         await connectDb()
         const dbUser = await User.findOne({ email: session.user.email })
+
         if (dbUser) {
-          session.user.name = dbUser.username
+          session.user.username = dbUser.username
+          session.user.profilepic = dbUser.profilepic || ''
         }
+
         return session
       } catch (err) {
-        console.error('Session Error:', err)
+        console.error('session error:', err)
         return session
       }
     },
