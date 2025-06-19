@@ -10,39 +10,50 @@ const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+
   callbacks: {
     async signIn({ user, account }) {
-      if (account.provider === 'github') {
-        await connectDb()
+      try {
+        if (account.provider === 'github') {
+          await connectDb()
 
-        const email = user?.email
-        if (!email) return false
+          const email = user?.email
+          if (!email) return false
 
-        let currentUser = await User.findOne({ email })
+          let existingUser = await User.findOne({ email })
 
-        if (!currentUser) {
-          const newUser = await User.create({
-            email,
-            username: email.split('@')[0],
-          })
-          user.name = newUser.username
-        } else {
-          user.name = currentUser.username
+          if (!existingUser) {
+            const newUser = await User.create({
+              email,
+              username: email.split('@')[0],
+            })
+            user.name = newUser.username
+          } else {
+            user.name = existingUser.username
+          }
+
+          return true // ✅ Sign in allowed
         }
 
-        return true
+        return true // fallback: allow other providers if used
+      } catch (error) {
+        console.error('SignIn Error:', error)
+        return false // ⛔ Deny on error
       }
-
-      return true // fallback just in case
     },
 
     async session({ session }) {
-      await connectDb()
-      const dbUser = await User.findOne({ email: session.user.email })
-      if (dbUser) {
-        session.user.name = dbUser.username
+      try {
+        await connectDb()
+        const dbUser = await User.findOne({ email: session.user.email })
+        if (dbUser) {
+          session.user.name = dbUser.username
+        }
+        return session
+      } catch (err) {
+        console.error('Session Error:', err)
+        return session
       }
-      return session
     },
   },
 }
