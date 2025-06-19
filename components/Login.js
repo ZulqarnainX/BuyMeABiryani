@@ -8,7 +8,7 @@ import { ToastContainer, Slide, toast } from 'react-toastify';
 
 
   const notify = () =>
-    toast.success('✅ Login Successful!', {
+    toast.success('✅ Redirecting...', {
       position: "top-right",
       autoClose: 1500,
       hideProgressBar: false,
@@ -27,9 +27,7 @@ const Login = () => {
   useEffect(() => {
     if (session) {
       notify()
-      setTimeout(() => {
         router.push('/dashboard')
-      }, 1500);
     }
   }, [session, router])
 

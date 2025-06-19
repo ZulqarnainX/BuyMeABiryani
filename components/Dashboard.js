@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [form, setform] = useState({})
 
   const notify = () =>
-    toast.success('✅ Save Successful!', {
+    toast.success('✅ Redirecting...', {
       position: "top-right",
       autoClose: 1500,
       hideProgressBar: false,
@@ -50,10 +50,8 @@ const Dashboard = () => {
     // alert("Profile Updated Successfully");
     notify()
     let a = await updateProfile(e, session.user.name)
-    setTimeout(() => {
       router.push(`/${session.user.name}`);
       getData();
-    }, 1500);
     
   }
 
