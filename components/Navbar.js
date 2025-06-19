@@ -8,7 +8,7 @@ const Navbar = () => {
   const [showdropdown, setShowdropdown] = useState(false)
 
   return (
-    <nav className='bg-[#020D25] text-white flex justify-between px-4 items-center h-16'>
+    <nav className='bg-[#020D25] text-white flex justify-between px-4 items-center md:h-16 flex-col md:flex-row'>
       {/* Logo */}
       <Link href={"/"} className="logo font-bold text-lg flex items-center">
         <img src="/biryani.png" width={44} alt="Logo" />
@@ -25,7 +25,7 @@ const Navbar = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button className='text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center'>
+          <button className='text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-2 py-1 md:px-5 md:py-2.5 inline-flex items-center'>
             <svg
               className="w-4 h-4 mr-2"
               xmlns="http://www.w3.org/2000/svg"
@@ -52,11 +52,11 @@ const Navbar = () => {
 
         {/* Profile/Login Button */}
         {session ? (
-          <div className="relative">
+          <div className="relative flex flex flex-col md:block gap-4">
             <button
               onClick={() => setShowdropdown(!showdropdown)}
               onBlur={() => setTimeout(() => setShowdropdown(false), 100)}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 md:px-5 md:py-2.5 inline-flex items-center"
             >
               Welcome {session.user.email}
               <svg className="w-2.5 h-2.5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -65,7 +65,7 @@ const Navbar = () => {
             </button>
 
             {/* Dropdown */}
-            <div className={`z-10 ${showdropdown ? "" : "hidden"} absolute right-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700`}>
+            <div className={`z-10 ${showdropdown ? "" : "hidden"} absolute right-0 md:mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 mt-[48px] dark:bg-gray-700`}>
               <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                 <li>
                   <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
