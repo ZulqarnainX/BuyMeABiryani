@@ -8,7 +8,8 @@ const Navbar = () => {
   const [showdropdown, setShowdropdown] = useState(false)
 
   return (
-    <nav className='bg-[#020D25] text-white flex justify-between px-4 items-center md:h-16 flex-col md:flex-row'>
+    <nav className='bg-[#020D25] pb-[8px] md:pb-0
+ text-white flex justify-between px-4 items-center md:h-16 flex-col md:flex-row'>
       {/* Logo */}
       <Link href={"/"} className="logo font-bold text-lg flex items-center">
         <img src="/biryani.png" width={44} alt="Logo" />
@@ -78,7 +79,7 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" onClick={() => signOut()} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  <Link href="#" onClick={() => signOut({ callbackUrl: '/' })} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                     Sign out
                   </Link>
                 </li>
