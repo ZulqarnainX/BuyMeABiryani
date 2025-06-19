@@ -42,18 +42,18 @@ export default function Home() {
         <div className="flex gap-5 justify-around">
           <div className="item space-y-3 flex flex-col items-center justify-center">
             <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/working_dog.gif" alt="" />
-            <p className="font-bold text-center">Fund Yourself</p>
-            <p className="text-center">Get funded and take the leap</p>
+            <p className="font-bold text-center">Do What You Love</p>
+            <p className="text-center">Turn your passion into something people support</p>
           </div>
           <div className="item space-y-3 flex flex-col items-center justify-center">
             <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/coin.gif" alt="" />
             <p className="font-bold text-center">Get Funded</p>
-            <p className="text-center">Get funded and take the leap</p>
+            <p className="text-center">Fans can show appreciation with a quick and easy tip</p>
           </div>
           <div className="item space-y-3 flex flex-col items-center justify-center">
             <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/group.gif" alt="" />
-            <p className="font-bold text-center">Fans want to help</p>
-            <p className="text-center">Your fans are here to support you</p>
+            <p className="font-bold text-center">Built for Fans</p>
+            <p className="text-center">They have got your back</p>
           </div>
 
         </div>
