@@ -11,21 +11,43 @@ const authOptions = {
       }),
   ],
      callbacks: {
-      async signIn({ user, account, profile, email, credentials }) {
-         if(account.provider == "github") { 
-          await connectDb()
-          // Check if the user already exists in the database
-          const currentUser =  await User.findOne({email: email}) 
-          if(!currentUser){
-            // Create a new user
-             const newUser = await User.create({
-              email: user.email, 
-              username: user.email.split("@")[0], 
-            })   
-          } 
-          return true
-         }
-      },
+      aasync signIn({ user, account, profile }) {
+  console.log("🧪 signIn() triggered")
+  console.log("➡️ user:", user)
+  console.log("➡️ profile:", profile)
+  console.log("➡️ account:", account)
+
+  const email = user?.email || profile?.email
+  console.log("📧 Extracted email:", email)
+
+  if (!email) {
+    console.log("❌ Email is undefined. Sign-in denied.")
+    return false // stop and show "Access Denied" page
+  }
+
+  try {
+    await connectDb()
+
+    let dbUser = await User.findOne({ email })
+
+    if (!dbUser) {
+      dbUser = await User.create({
+        email,
+        username: email.split("@")[0],
+        name: user.name || email.split("@")[0],
+        profilepic: user.image || "",
+      })
+      console.log("✅ Created new user:", dbUser.email)
+    } else {
+      console.log("✅ Found existing user:", dbUser.email)
+    }
+
+    return true
+  } catch (err) {
+    console.error("❌ signIn error:", err)
+    return false
+  }
+},
 
     async session({ session }) {
       try {
