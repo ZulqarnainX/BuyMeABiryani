@@ -11,7 +11,7 @@ const authOptions = {
       }),
   ],
      callbacks: {
-      aasync signIn({ user, account, profile }) {
+      async signIn({ user, account, profile }) {
   console.log("🧪 signIn() triggered")
   console.log("➡️ user:", user)
   console.log("➡️ profile:", profile)
