@@ -12,8 +12,8 @@ const UserSchema = new Schema({
     easypaisanum: { type: Number },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
-    accountbio: { type: String, default: "" },
-    accountdes: { type: String, default: "" },
+    bio: { type: String, default: "" },
+    description: { type: String, default: "" },
     accountType: {
         type: String,
         enum: ["Easypaisa", "JazzCash"], // change these values to match your options

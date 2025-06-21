@@ -1,73 +1,55 @@
-import NextAuth from 'next-auth'
-import GitHubProvider from 'next-auth/providers/github'
-import connectDb from '@/db/connectDb'
-import User from '@/models/User'
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import connectDb from "@/db/connectDb";
+import User from "@/models/User";
 
-const authOptions = {
+const handler = NextAuth({
   providers: [
-     GitHubProvider({
-        clientId: process.env.GITHUB_ID,
-        clientSecret: process.env.GITHUB_SECRET
-      }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text", placeholder: "you@example.com" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        await connectDb();
+        const user = await User.findOne({ email: credentials.email });
+        if (!user) throw new Error("❌ No user found");
+
+        const isMatch = await bcrypt.compare(credentials.password, user.password);
+        if (!isMatch) throw new Error("❌ Incorrect password");
+
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: user.username,
+          image: user.profilepic || "",
+        };
+      },
+    }),
   ],
-     callbacks: {
-      async signIn({ user, account, profile }) {
-  console.log("🧪 signIn() triggered")
-  console.log("➡️ user:", user)
-  console.log("➡️ profile:", profile)
-  console.log("➡️ account:", account)
-
-  const email = user?.email || profile?.email
-  console.log("📧 Extracted email:", email)
-
-  if (!email) {
-    console.log("❌ Email is undefined. Sign-in denied.")
-    return false // stop and show "Access Denied" page
-  }
-
-  try {
-    await connectDb()
-
-    let dbUser = await User.findOne({ email })
-
-    if (!dbUser) {
-      dbUser = await User.create({
-        email,
-        username: email.split("@")[0],
-        name: user.name || email.split("@")[0],
-        profilepic: user.image || "",
-      })
-      console.log("✅ Created new user:", dbUser.email)
-    } else {
-      console.log("✅ Found existing user:", dbUser.email)
-    }
-
-    return true
-  } catch (err) {
-    console.error("❌ signIn error:", err)
-    return false
-  }
-},
-
-    async session({ session }) {
-      try {
-        await connectDb()
-
-        const dbUser = await User.findOne({ email: session.user.email })
-
-        if (dbUser) {
-          session.user.username = dbUser.username
-          session.user.profilepic = dbUser.profilepic || ""
-        }
-
-        return session
-      } catch (err) {
-        console.error("❌ session error:", err)
-        return session
+  pages: {
+    signIn: "/login",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async session({ session, token }) {
+      session.user.id = token.sub;
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.name = user.name;
+        token.email = user.email;
+        token.picture = user.image;
       }
+      return token;
     },
   },
-}
+  secret: process.env.NEXTAUTH_SECRET,
+});
 
-const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
