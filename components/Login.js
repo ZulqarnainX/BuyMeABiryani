@@ -72,7 +72,7 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 dark:text-white border border-gray-300"
+            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700  border-gray-300"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -81,7 +81,7 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 dark:text-white border border-gray-300"
+            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 border-gray-300"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
