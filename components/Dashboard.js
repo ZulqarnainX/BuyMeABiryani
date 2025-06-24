@@ -46,7 +46,7 @@ const Dashboard = () => {
       const data = await res.json();
       if (res.ok) {
         alert("✅ Account updated successfully!");
-        router.push("/dashboard/setup-profile");
+        router.push(`/${session.user.name}`);
       } else {
         alert("❌ Update failed: " + data.error);
       }
@@ -83,10 +83,15 @@ const Dashboard = () => {
           <div className="mb-4">
             <label className="block mb-1">Account Number</label>
             <input
-              type="number"
+              type="text"
               className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-              value={easypaisanum}
-              onChange={(e) => setEasypaisanum(e.target.value)}
+              value={`+92${easypaisanum}`}
+              onChange={(e) => {
+                const input = e.target.value.replace(/^\+92/, ''); // remove +92 if user somehow retypes it
+                if (/^\d{0,10}$/.test(input)) {
+                  setEasypaisanum(input);
+                }
+              }}
               required
             />
           </div>
