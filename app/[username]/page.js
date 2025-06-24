@@ -5,29 +5,24 @@ import connectDB from '@/db/connectDb'
 import PaymentPage from '@/components/PaymentPage'
 
 const Username = async ({ params }) => {
- 
- // If the username is not present in the database, show a 404 page
-  const checkUser = async () => {
-    await connectDB()
-    let u = await User.findOne({ username: params.username })
-    if (!u) {
-      return notFound()
-    }
+  await connectDB()
+  const u = await User.findOne({ username: params.username }).lean()
+
+  if (!u) return notFound()
+
+  // Convert special fields to plain strings
+  const safeUser = {
+    ...u,
+    _id: u._id.toString(),
+    createdAt: u.createdAt?.toISOString?.(),
+    updatedAt: u.updatedAt?.toISOString?.(),
   }
-  await checkUser()
- 
- 
- 
- 
-    return (
-    <>
-      <PaymentPage username={params.username} />
-    </>
-  )
+
+  return <PaymentPage user={safeUser} />
 }
 
 export default Username
- 
+
 export async function generateMetadata({ params }) {
   return {
     title: `Support ${params.username} - GetMeABiryani`,

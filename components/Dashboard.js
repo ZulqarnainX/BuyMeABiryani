@@ -10,6 +10,10 @@ const Dashboard = () => {
   const [accountType, setAccountType] = useState("");
   const [easypaisanum, setEasypaisanum] = useState("");
   const [easypaisaname, setEasypaisaname] = useState("");
+  const [bio, setBio] = useState("");
+  const [description, setDescription] = useState("");
+  const [profilepic, setProfilepic] = useState("");
+  const [coverpic, setCoverpic] = useState("");
 
   // Wait for session to load
   useEffect(() => {
@@ -32,6 +36,10 @@ const Dashboard = () => {
           accountType,
           easypaisanum,
           easypaisaname,
+          bio,
+          description,
+          profilepic,
+          coverpic,
         }),
       });
 
@@ -48,8 +56,7 @@ const Dashboard = () => {
     }
   };
 
-  if (status === "loading") return null;
-  if (status === "unauthenticated") return null;
+  if (status === "loading" || status === "unauthenticated") return null;
 
   return (
     <div className="text-white container mx-auto">
@@ -92,6 +99,45 @@ const Dashboard = () => {
               value={easypaisaname}
               onChange={(e) => setEasypaisaname(e.target.value)}
               required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-1">Bio</label>
+            <input
+              type="text"
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-1">Description</label>
+            <textarea
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-1">Profile Picture URL</label>
+            <input
+              type="text"
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+              value={profilepic}
+              onChange={(e) => setProfilepic(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-1">Cover Picture URL</label>
+            <input
+              type="text"
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+              value={coverpic}
+              onChange={(e) => setCoverpic(e.target.value)}
             />
           </div>
 
