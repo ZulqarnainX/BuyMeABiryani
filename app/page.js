@@ -36,28 +36,45 @@ export default function Home() {
     </div>
    </div>
       <div className="bg-white h-1 opacity-10"></div>
+<div className="text-white container mx-auto max-w-6xl pb-32 pt-14 px-6">
+  <h1 className="text-3xl font-bold text-center mb-14 bg-gradient-to-r from-sky-200 via-blue-100 to-slate-300 text-transparent bg-clip-text">
+    Your Fans Can Buy You A Biryani
+  </h1>
+  <div className="flex flex-col md:flex-row justify-center items-stretch gap-10 md:gap-16">
+    <div className="item space-y-3 flex flex-col items-center text-center px-4">
+      <img
+        className="bg-slate-800 rounded-full p-2"
+        width={88}
+        src="/working_dog.gif"
+        alt=""
+      />
+      <p className="font-bold text-lg">Do What You Love</p>
+      <p>Turn your passion into something people support</p>
+    </div>
+    <div className="item space-y-3 flex flex-col items-center text-center px-4">
+      <img
+        className="bg-slate-800 rounded-full p-2"
+        width={88}
+        src="/coin.gif"
+        alt=""
+      />
+      <p className="font-bold text-lg">Get Funded</p>
+      <p>Fans can show appreciation with a quick and easy tip</p>
+    </div>
+    <div className="item space-y-3 flex flex-col items-center text-center px-4">
+      <img
+        className="bg-slate-800 rounded-full p-2"
+        width={88}
+        src="/group.gif"
+        alt=""
+      />
+      <p className="font-bold text-lg">Built for Fans</p>
+      <p>They have got your back</p>
+    </div>
+  </div>
+</div>
 
-      <div className="text-white container mx-auto pb-32 pt-14 px-10">
-        <h1 className="text-3xl font-bold text-center mb-14 bg-gradient-to-r from-sky-200 via-blue-100 to-slate-300 text-transparent bg-clip-text">Your Fans Can Buy You A Biryani</h1>
-        <div className="flex gap-5 justify-around">
-          <div className="item space-y-3 flex flex-col items-center justify-center">
-            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/working_dog.gif" alt="" />
-            <p className="font-bold text-center">Do What You Love</p>
-            <p className="text-center">Turn your passion into something people support</p>
-          </div>
-          <div className="item space-y-3 flex flex-col items-center justify-center">
-            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/coin.gif" alt="" />
-            <p className="font-bold text-center">Get Funded</p>
-            <p className="text-center">Fans can show appreciation with a quick and easy tip</p>
-          </div>
-          <div className="item space-y-3 flex flex-col items-center justify-center">
-            <img className="bg-slate-800 rounded-full p-2 text-black" width={88} src="/group.gif" alt="" />
-            <p className="font-bold text-center">Built for Fans</p>
-            <p className="text-center">They have got your back</p>
-          </div>
 
-        </div>
-        </div>
     </>
   );
 }
