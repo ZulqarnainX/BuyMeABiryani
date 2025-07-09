@@ -66,7 +66,15 @@ const Signup = () => {
           </div>
           <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 border-gray-300" />
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 border-gray-300" />
-          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 border-gray-300" />
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value.replace(/\s/g, "").toLowerCase())}
+            required
+            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 border-gray-300"
+          />
+
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 border-gray-300" />
           <button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700 w-full text-white py-2 rounded font-semibold">
             {loading ? "Signing up..." : "Sign Up"}
